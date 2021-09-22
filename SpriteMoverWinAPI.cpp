@@ -17,6 +17,7 @@ BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 RECT ClientRect;
+HBITMAP pattern;
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	_In_opt_ HINSTANCE hPrevInstance,
@@ -98,6 +99,8 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
 	hInst = hInstance; // Сохранить маркер экземпляра в глобальной переменной
 
+	pattern = LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP2));
+
 	HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
 
@@ -149,17 +152,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		PAINTSTRUCT ps;
 		HDC hdc = BeginPaint(hWnd, &ps);
 
-		//FillRect(hdc, &ClientRect, reinterpret_cast<HBRUSH>(GetStockObject(LTGRAY_BRUSH)));
+		FillRect(hdc, &ClientRect, reinterpret_cast<HBRUSH>(GetStockObject(LTGRAY_BRUSH)));
 
-		HPEN newPan = CreatePen(PS_SOLID, 5, RGB(0, 0, 255));
-		HGDIOBJ oldPen = SelectObject(hdc, newPan);
-		HGDIOBJ oldBrush = SelectObject(hdc, GetStockObject(BLACK_BRUSH));
-		Rectangle(hdc, ClientRect.left + 10, ClientRect.top + 10, ClientRect.right - 10, ClientRect.bottom - 10);
+		HPEN newPen = CreatePen(PS_SOLID, 5, RGB(0, 0, 255));
+		HBRUSH newBrush = CreatePatternBrush(pattern);
+
+		HGDIOBJ oldPen = SelectObject(hdc, newPen);
+		HGDIOBJ oldBrush = SelectObject(hdc, newBrush);
+
+		int indent = 50;
+		Rectangle(hdc, ClientRect.left + indent, ClientRect.top + indent, ClientRect.right - indent, ClientRect.bottom - indent);
 
 		SelectObject(hdc, oldPen);
 		SelectObject(hdc, oldBrush);
 
-		DeleteObject(newPan);
+		DeleteObject(newPen);
+		DeleteObject(newBrush);
 
 		EndPaint(hWnd, &ps);
 	}

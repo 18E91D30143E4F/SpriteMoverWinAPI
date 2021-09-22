@@ -45,5 +45,11 @@
     <Image Include="SpriteMoverWinAPI.ico">
       <Filter>Файлы ресурсов</Filter>
     </Image>
+    <Image Include="img\sad.bmp">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="img\pattern.bmp">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
   </ItemGroup>
 </Project>

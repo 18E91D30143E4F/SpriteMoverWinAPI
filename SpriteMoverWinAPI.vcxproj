@@ -151,6 +151,8 @@
     <ResourceCompile Include="SpriteMoverWinAPI.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="img\pattern.bmp" />
+    <Image Include="img\sad.bmp" />
     <Image Include="small.ico" />
     <Image Include="SpriteMoverWinAPI.ico" />
   </ItemGroup>
